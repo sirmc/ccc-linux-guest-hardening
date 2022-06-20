@@ -46,3 +46,17 @@ else
 	west update -k
 	pipenv run bash ./manifest/create_env.sh > .env
 endif
+
+sharedir:
+ifneq ($(PIPENV_ACTIVE), 1)
+	@echo "Error: Need to run inside pipenv. Abort."
+else
+	$(BKC_ROOT)/bkc/kafl/userspace/gen_sharedir.sh $(BKC_ROOT)/sharedir
+endif
+
+initrd.cpio.gz:
+ifneq ($(PIPENV_ACTIVE), 1)
+	@echo "Error: Need to run inside pipenv. Abort."
+else
+	$(BKC_ROOT)/bkc/kafl/userspace/gen_buildroot.sh initrd.cpio.gz
+endif
